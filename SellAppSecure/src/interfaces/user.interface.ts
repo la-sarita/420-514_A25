@@ -1,9 +1,19 @@
-export interface User {
-    id: number;
+export interface IUserBase {
     name: string;
     username: string;
     email: string;
-    password: string;
     role: string;
 }
+
+export interface IUserResponse extends IUserBase{
+    id: number;
+}
   
+export interface IUser extends IUserResponse {
+    password: string;
+}
+
+export interface IUserLogin{
+    name: string;
+    username: string;
+}

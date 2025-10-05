@@ -1,15 +1,10 @@
+import "./config/container";
 import express, {Request, Response} from 'express';
 import userRoutes from './routes/user.route';
 import authRoutes from './routes/auth.route'
-import { User } from './interfaces/user.interface';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs'; 
 import rateLimit from 'express-rate-limit';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
-// import productRoutes from './routes/product.route';
-// import { errorMiddleware } from './middlewares/error.middleware';
-
 
 const app = express();
 

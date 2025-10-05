@@ -1,11 +1,13 @@
-import { Router, Request, Response } from "express";
-import { User } from '../interfaces/user.interface';
+import { Router } from "express";
+import { container } from "tsyringe";
 import { UserController } from "../controllers/user.controller";
+import { verifyToken } from "../middlewares/auth.middleware";
+import { roleMiddleware } from "../middlewares/roles.middleware";
 
 
 const router = Router();
 
-const userController = new UserController();
+const controller = container.resolve(UserController);
 
 /**
  * @swagger
@@ -31,23 +33,41 @@ const userController = new UserController();
  *                     example: John Doe
  *                   email:
  *                     type: string
- *                     exemple: jane.doe@example.com
+ *                     format: email
  */
-router.get('/users', userController.getAllUsers);
+router.get('/users', controller.getAllUsers.bind(controller));
 
-  
-// Route pour obtenir un utilisateur par ID
-router.get('/users/:id', (req: Request, res: Response) => {
-    const userId = req.params.id ? parseInt(req.params.id, 10) : null ;
-    // const user = users.find(u => u.id === userId);
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   get:
+ *     summary: Get a user by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Numeric ID of the user to retrieve
+ *     responses:
+ *       200:
+ *         description: A single user.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   example: 1
+ *                 name:
+ *                   type: string
+ *                   example: John Doe
+ *       404:
+ *         description: User not found.
+ */
+router.get('/users/:id', controller.getUserById.bind(controller));
 
-    // if (user) {
-    //     res.json(user);
-    // } else {
-    //     res.status(404).send('User not found');
-    // }
-});
-
-
+router.get('/admin', verifyToken, roleMiddleware(['admin']), controller.getAdminData.bind(controller));
 
 export default router;
