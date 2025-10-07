@@ -35,7 +35,9 @@ const controller = container.resolve(UserController);
  *                     type: string
  *                     format: email
  */
-router.get('/users', controller.getAllUsers.bind(controller));
+router.get('/', controller.getAllUsers.bind(controller));
+
+router.get('/admin', verifyToken, roleMiddleware(['admin']), controller.getAdminData.bind(controller));
 
 /**
  * @swagger
@@ -66,8 +68,7 @@ router.get('/users', controller.getAllUsers.bind(controller));
  *       404:
  *         description: User not found.
  */
-router.get('/users/:id', controller.getUserById.bind(controller));
+router.get('/:id', controller.getUserById.bind(controller));
 
-router.get('/admin', verifyToken, roleMiddleware(['admin']), controller.getAdminData.bind(controller));
 
 export default router;

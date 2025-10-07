@@ -1,37 +1,35 @@
-import NodeRSA from 'node-rsa';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs'; 
+import bcrypt from 'bcryptjs';
 import { injectable } from 'tsyringe';
 import { JWT_SECRET } from '../utils/jwt';
-import { IUser } from '../interfaces/user.interface';
+import { IUser, IUserPayload } from '../interfaces/user.interface';
+import { signToken } from '../middlewares/auth.middleware';
 
-const users: IUser[] = [
-  { id: 1, name: 'Jane Doe', email: 'jane.doe@example.com', username: 'jane.doe', password: '', role: 'admin' },
-  { id: 2, name: 'Jane Doe', email: 'jane.doe@example.com', username: 'jane.doe', password: '', role: 'user' }
-];
+const users: IUser[] = [];
 
 @injectable()
 export class AuthService {
 
+  async register(userBody: IUser) {
+    const hashedPassword = await bcrypt.hash(userBody.password, 10);
+    const user: IUser = {
+      ...userBody,
+      id: users.length + 1,
+      password: hashedPassword
+    };
+
+    users.push(user);
+    return user;
+  }
+
   async login(email: string, password: string): Promise<string | null> {
-    const user = await users?.filter(user => user.email === email)[0];
-    console.log(user);
-    // console.log(password, " ==? ", user?.password);
-    // console.log(bcrypt.compare(password, user ? user.password: ''));
+    const user = await users?.find(user => user.email === email);
+
     if (user && await bcrypt.compare(password, user.password)) {
-      const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: '1h' });
-      return token;
+      const payload = { id: user.id, email: user.email, role: user.role };
+      return signToken(payload);
     }
     return null;
   }
 
-  verifyToken(token: string): any {
-    return jwt.verify(token, JWT_SECRET);
-  }
+
 }
-
-const key = new NodeRSA({ b: 512 });
-const publicKey = key.exportKey('public');
-const privateKey = key.exportKey('private');
-
-export { key };

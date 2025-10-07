@@ -1,5 +1,5 @@
 import "./config/container";
-import express, {Request, Response} from 'express';
+import express, { Request, Response } from 'express';
 import userRoutes from './routes/user.route';
 import authRoutes from './routes/auth.route'
 import rateLimit from 'express-rate-limit';
@@ -10,15 +10,15 @@ const app = express();
 
 // Définir les options de Swagger
 const swaggerOptions = {
-    definition: {
-      openapi: '3.0.0',
-      info: {
-        title: 'User API',
-        version: '1.0.0',
-        description: 'A simple API to manage users',
-      },
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'User API',
+      version: '1.0.0',
+      description: 'A simple API to manage users',
     },
-    apis: ['./src/routes/*.ts'], // Fichier où les routes de l'API sont définies
+  },
+  apis: ['./src/routes/*.ts'], // Fichier où les routes de l'API sont définies
 };
 
 // Générer la documentation à partir des options
@@ -32,11 +32,9 @@ app.use(express.json());
 
 // Limiter les requêtes
 app.use(rateLimit({ windowMs: 60000, max: 50 }));
-app.get('/', (req: Request, res: Response) => {
-    res.send('Hello, TypeScript with Express! Connexion sécurisée.');
-});
+
 app.use('/', authRoutes);
-app.use('/api', userRoutes);
+app.use('/api/users', userRoutes);
 
 // TODO: Ajouter productRoutes
 // app.use('/api', productRoutes);

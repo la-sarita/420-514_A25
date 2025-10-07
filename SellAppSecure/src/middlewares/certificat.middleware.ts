@@ -1,4 +1,5 @@
 import fs from 'fs';
+import NodeRSA from 'node-rsa';
 
 export function loadCertificate() {
     let certificatOptions;
@@ -13,3 +14,8 @@ export function loadCertificate() {
     }
     return certificatOptions;
 }
+
+
+const key = new NodeRSA({ b: 512 });
+
+export { key };

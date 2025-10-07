@@ -7,7 +7,8 @@
     "test": "tests"
   },
   "scripts": {
-    "start": "ts-node-dev --respawn src/index.ts",
+    "start": "ts-node --files src/index.ts",
+    "dev": "ts-node-dev --files --respawn src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

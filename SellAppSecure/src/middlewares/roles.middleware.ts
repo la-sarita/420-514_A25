@@ -1,11 +1,17 @@
 import { Request, Response, NextFunction } from 'express';
 
-export function roleMiddleware(roles: string[]) {
+export const roleMiddleware = (allowedRoles: string[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    const userRole = req.body.user?.role;
-    if (!roles.includes(userRole)) {
+    try {
+      const userRole = req.user?.role || '';
+
+      if (!allowedRoles.includes(userRole)) {
+        return res.status(403).json({ message: 'Accès interdit.' });
+      }
+
+      next();
+    } catch {
       return res.status(403).json({ message: 'Accès interdit.' });
     }
-    next();
-  };
-}
+  }
+};
