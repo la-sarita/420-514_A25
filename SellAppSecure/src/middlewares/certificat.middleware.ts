@@ -1,12 +1,12 @@
 import fs from 'fs';
-import NodeRSA from 'node-rsa';
+import { config } from '../config/config';
 
 export function loadCertificate() {
     let certificatOptions;
     try {
         certificatOptions = {
-            key: fs.readFileSync('key.pem'),
-            cert: fs.readFileSync('cert.pem')
+            key: fs.readFileSync(config.sslKeyPath),
+            cert: fs.readFileSync(config.sslCertPath)
         };
     } catch (error) {
         console.error("Erreur lors du chargement des certificats SSL :", error);
@@ -14,8 +14,3 @@ export function loadCertificate() {
     }
     return certificatOptions;
 }
-
-
-const key = new NodeRSA({ b: 512 });
-
-export { key };

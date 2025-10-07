@@ -1,0 +1,24 @@
+{
+    "app": {
+        "name": "SellAppSecure",
+        "version": "3.0.0",
+        "apiBasePath": "/api"
+    },
+    "server": {
+        "trustProxy": false,
+        "http": {
+            "enabled": true,
+            "port": 3000
+        },
+        "https": {
+            "enabled": false,
+            "port": 3443,
+            "redirectAllHttpToHttps": false,
+            "cert": {
+                "keyPath": "./certs/dev-key.pem",
+                "certPath": "./certs/dev-cert.pem",
+                "passphrase": ""
+            }
+        }
+    }
+}

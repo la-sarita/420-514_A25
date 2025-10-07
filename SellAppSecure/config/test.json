@@ -1,0 +1,11 @@
+{
+    "server": {
+        "http": {
+            "enabled": true,
+            "port": 3100
+        },
+        "https": {
+            "enabled": false
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "port": 3000,
+    "sslKeyPath": "./certs/key.pem",
+    "sslCertPath": "./certs/cert.pem",
+    "jwtSecret": "votre_secret_jwt",
+    "databaseUrl": "mongodb://localhost:27017/appdb",
+    "nodeEnv": "development",
+    "logLevel": "debug"
+}

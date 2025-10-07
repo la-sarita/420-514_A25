@@ -1,0 +1,19 @@
+{
+    "server": {
+        "trustProxy": "TRUST_PROXY",
+        "http": {
+            "enabled": "HTTP_ENABLED",
+            "port": "HTTP_PORT"
+        },
+        "https": {
+            "enabled": "HTTPS_ENABLED",
+            "port": "HTTPS_PORT",
+            "redirectAllHttpToHttps": "REDIRECT_HTTP_TO_HTTPS",
+            "cert": {
+                "keyPath": "SSL_KEY_PATH",
+                "certPath": "SSL_CERT_PATH",
+                "passphrase": "SSL_PASSPHRASE"
+            }
+        }
+    }
+}

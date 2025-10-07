@@ -1,10 +1,11 @@
 import "./config/container";
-import express, { Request, Response } from 'express';
+import express from 'express';
 import userRoutes from './routes/user.route';
 import authRoutes from './routes/auth.route'
 import rateLimit from 'express-rate-limit';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
+import config from 'config';
 
 const app = express();
 
@@ -29,18 +30,18 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use(express.json());
 
+const base = config.get<string>("app.apiBasePath");
 
 // Limiter les requêtes
 app.use(rateLimit({ windowMs: 60000, max: 50 }));
 
 app.use('/', authRoutes);
-app.use('/api/users', userRoutes);
+app.use(`${base}/users`, userRoutes);
 
 // TODO: Ajouter productRoutes
-// app.use('/api', productRoutes);
+// app.use(`${base}/products`, productRoutes);
 
 // TODO: Ajouter errorMiddleware
 // app.use(errorMiddleware);
-// Route de base
 
 export default app;

@@ -1,0 +1,19 @@
+{
+    "server": {
+        "trustProxy": true,
+        "http": {
+            "enabled": true,
+            "port": 80
+        },
+        "https": {
+            "enabled": true,
+            "port": 8443,
+            "redirectAllHttpToHttps": true,
+            "cert": {
+                "keyPath": "./certs/dev-key.pem",
+                "certPath": "./certs/dev-key.pem",
+                "passphrase": ""
+            }
+        }
+    }
+}
