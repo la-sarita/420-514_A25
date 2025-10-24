@@ -1,6 +1,6 @@
 import { IUser, IUserResponse } from '../interfaces/user.interface';
 import { injectable } from "tsyringe";
-import { users } from '../data/users';
+import { users } from '../../V1/data/users';
 
 
 @injectable()

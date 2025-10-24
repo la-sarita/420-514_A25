@@ -10,7 +10,7 @@ let port = cfg.http.port;
 
 let server: Server<any> = httpServer;
 
-console.log((cfg.https.enabled));
+
 if (cfg.https.enabled && httpsServer) {
   port = cfg.https.port;
   server = httpsServer;

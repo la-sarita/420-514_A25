@@ -1,8 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { injectable } from 'tsyringe';
-import { JWT_SECRET } from '../utils/jwt';
 import { IUser, IUserPayload } from '../interfaces/user.interface';
-import { signToken } from '../middlewares/auth.middleware';
+import { signToken } from '../../middlewares/auth.middleware';
 
 const users: IUser[] = [];
 
@@ -30,6 +29,4 @@ export class AuthService {
     }
     return null;
   }
-
-
 }

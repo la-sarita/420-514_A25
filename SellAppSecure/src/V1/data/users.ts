@@ -1,4 +1,4 @@
-import { IUser } from "../interfaces/user.interface";
+import { IUser } from "../../V2/interfaces/user.interface";
 
 export let users: IUser[] = [
     { id: 1, name: 'Jane Doe', email: 'jane.doe@example.com', username: 'jane.doe', password: '', role: 'admin' },

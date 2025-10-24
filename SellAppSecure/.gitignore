@@ -13,6 +13,10 @@ yarn-error.log*
 
 # Environnement local
 .env
+config/
+
+# Fichiers certificats pour SSL
+certs/
 
 # Cache et données temporaires
 *.tsbuildinfo

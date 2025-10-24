@@ -2,7 +2,8 @@ import { Request, Response } from 'express';
 import { AuthService } from "../services/auth.service";
 import { container, injectable } from "tsyringe";
 import { IUser } from '../interfaces/user.interface';
-import { users } from '../data/users';
+import { users } from '../../V1/data/users';
+
 
 @injectable()
 export class AuthController {

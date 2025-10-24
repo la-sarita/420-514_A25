@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../utils/jwt';
-import { IUserPayload } from '../interfaces/user.interface';
+import { IUserPayload } from '../V2/interfaces/user.interface';
 import 'express';
 
 export const signToken = (payload: IUserPayload): string => {

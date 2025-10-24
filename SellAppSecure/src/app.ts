@@ -1,13 +1,31 @@
 import "./config/container";
 import express from 'express';
-import userRoutes from './routes/user.route';
-import authRoutes from './routes/auth.route'
+import allRoutes from './routes/routes';
+import authRoutes from './V2/routes/auth.route';
 import rateLimit from 'express-rate-limit';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
-import config from 'config';
+import winston from "winston";
 
 const app = express();
+// Configuration du logger avec Winston
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json()
+  ),
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: 'logs/app.log' })
+  ]
+});
+
+// Middleware de logging utilisant Winston
+app.use((req, res, next) => {
+  logger.info(`${req.method} ${req.url}`);
+  next();
+});
 
 // Définir les options de Swagger
 const swaggerOptions = {
@@ -30,16 +48,11 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use(express.json());
 
-const base = config.get<string>("app.apiBasePath");
-
 // Limiter les requêtes
 app.use(rateLimit({ windowMs: 60000, max: 50 }));
 
-app.use('/', authRoutes);
-app.use(`${base}/users`, userRoutes);
-
-// TODO: Ajouter productRoutes
-// app.use(`${base}/products`, productRoutes);
+//app.use('/', authRoutes);
+app.use(allRoutes);
 
 // TODO: Ajouter errorMiddleware
 // app.use(errorMiddleware);

@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { container } from "tsyringe";
 import { UserController } from "../controllers/user.controller";
-import { verifyToken } from "../middlewares/auth.middleware";
-import { roleMiddleware } from "../middlewares/roles.middleware";
+import { verifyToken } from "../../middlewares/auth.middleware";
+import { roleMiddleware } from "../../middlewares/roles.middleware";
 
 
 const router = Router();
